@@ -108,8 +108,13 @@ public class AVLTree {
             System.out.printf("%d ", root.studentName);
             preOrder(root.right);
         }
+    }/*TODO
+    public String inOrder(Node root) {
+    	String toString="";
+    	if(root==null) return "[]";
+    	toString = "["+ inOrder(root.left)
     }
-
+*/
     private Node minValueNode(Node node) {
         Node current = node;
         /* loop down to find the leftmost leaf */

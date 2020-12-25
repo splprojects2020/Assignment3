@@ -7,8 +7,29 @@ public class Student extends User{
 	public Student(String userName,String password) {
 		super(userName,password);
 	}
+	public Vector<Integer> getRegisterdCourses(){
+		return registerdCourses;
+	}
 	public boolean registerCourse(int courseNum) {
-		
+		if(database.registerCourse(courseNum,userName)) {
+			registerdCourses.add(courseNum);
+			return true;
+		}
+		return false;
+	}
+	public String studentStatus() {
+		return "Student: "+userName+ " \n"+
+				"Courses: "+registerdCourses.toString() + " **NEED TO ORDED**";
+	}
+	public String isRegisterdToCourse(int courseNum) {
+		if(registerdCourses.contains(courseNum))
+			return "REGISTERD";
+		return "NOT REGISTERD";
+	}
+	public boolean unregister(int courseNum) {
+		if(!registerdCourses.contains(courseNum)) return false;
+		database.unregisterStudentFromCourse(userName,courseNum);
+		return true;
 	}
 
 }
