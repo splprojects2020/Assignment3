@@ -71,10 +71,15 @@ public class Database {
 		return true;
 	}
 	
-	public boolean register(String userName,String password) {
+	public boolean register(String userName,String password,boolean admin) {
 		if(usersList.containsKey(userName))
 			return false;
-		usersList.put(userName, new User(userName,password));
+		if(admin) {
+			usersList.put(userName, new Admin(userName,password));
+		}
+		else {
+			usersList.put(userName, new Student(userName,password));
+		}
 		return true;
 	}
 	public boolean login(String userName,String password) {
