@@ -18,7 +18,7 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 		case 1:
 			if(database.register(msg.get(1), msg.get(2),true)) {//return ACK
 				output.add("12");
-				output.add("1");
+				output.add("1");//
 				return output;
 			}
 			failed=true;
