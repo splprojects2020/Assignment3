@@ -29,7 +29,7 @@ public class Course {
 		String toString = 
 				  "Course: ("+courseNum+") " +courseName+  "\n"
 				+ "Seats Available: " +numOfSeatsAvailable+"/"+numOfMaxStudents +"\n"
-				+ "Students Registerd: **INORDER PRINT**";  
+				+ "Students Registerd: [" +listOfStudents.inOrder(root) + "]";  
 	}
 	
 	public Node setRoot(Node newInsert) {

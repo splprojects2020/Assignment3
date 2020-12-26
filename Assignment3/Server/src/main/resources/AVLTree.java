@@ -102,19 +102,11 @@ public class AVLTree {
         return height(N.left) - height(N.right);
     }
 
-    public void preOrder(Node root) {
-        if (root != null) {
-            preOrder(root.left);
-            System.out.printf("%d ", root.studentName);
-            preOrder(root.right);
-        }
-    }/*TODO
     public String inOrder(Node root) {
-    	String toString="";
-    	if(root==null) return "[]";
-    	toString = "["+ inOrder(root.left)
+    	if(root==null) return "";
+    	return inOrder(root.left) + root.studentName + "," + inOrder(root.right);
     }
-*/
+
     private Node minValueNode(Node node) {
         Node current = node;
         /* loop down to find the leftmost leaf */
