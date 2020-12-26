@@ -1,4 +1,4 @@
-
+package bgu.spl.net.resources;
 public class Admin extends User{
 	
 	public Admin(String userName,String password) {

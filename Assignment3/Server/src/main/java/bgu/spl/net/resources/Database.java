@@ -1,3 +1,4 @@
+package bgu.spl.net.resources;
 import java.util.HashMap;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,7 +50,7 @@ public class Database {
 				line=line.substring(line.indexOf('|')+1,line.length());
 				String kdamCourseString=line.substring(0, line.indexOf('|'));
 				String temp = "";
-				Vector<Integer> kdamCourse=new Vector();
+				Vector<Integer> kdamCourse=new Vector<Integer>();
 				for (int i = 0; i < kdamCourseString.length(); i++) { 
 					if(kdamCourseString.charAt(i)>='0' && kdamCourseString.charAt(i)<='9')
 						temp =temp+ kdamCourseString.charAt(i); 
@@ -80,22 +81,24 @@ public class Database {
 		User currentUser = usersList.get(userName);
 		if(currentUser==null) return false;
 		if(!currentUser.getPassword().equals(password)) return false;
-		currentUser.login();		
+		currentUser.login();
+		return true;
 	}
 	public boolean logout() {//TODO
-		
+		return false;
 	}
 	
 	public boolean registerCourse(int courseName,String userName) {
-		Student currentUser = usersList.get(userName);
+		Student currentUser = (Student) usersList.get(userName);
 		if(!currentUser.isLogged) return false;
-		Course desiredCourse = usersList.get(courseName);
+		Course desiredCourse = coursesList.get(courseName);
 		if(desiredCourse==null || desiredCourse.getNumOfSeatsAvailable()<=0 |
 				!currentUser.getRegisterdCourses().containsAll(desiredCourse.getKdamCoursesList()) |
 				currentUser.getRegisterdCourses().contains(desiredCourse.getCourseNum())) 
 			return false;
 		desiredCourse.takeSeat();
 		desiredCourse.setRoot(desiredCourse.getListOfStudents().insert(desiredCourse.getRoot(), userName));	
+		return true;
 	}
 	public String courseStatus(int courseNum) {	
 		Course desiredCourse = coursesList.get(courseNum);

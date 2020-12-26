@@ -1,4 +1,7 @@
+package bgu.spl.net.resources;
 import java.util.*;
+
+import bgu.spl.net.resources.AVLTree.Node;
 public class Course {
 
 	private final int courseNum;
@@ -9,7 +12,7 @@ public class Course {
 	private AVLTree listOfStudents;
 	private Node root;
 
-	public Course(int courseNum,String courseName,Vector<Integer> kdamCoursesList,int numOfMaxStudnets) {
+	public Course(int courseNum,String courseName,Vector<Integer> kdamCoursesList,int numOfMaxStudents) {
 		this.courseNum=courseNum;
 		this.courseName=courseName;
 		this.kdamCoursesList=kdamCoursesList;
@@ -30,9 +33,10 @@ public class Course {
 				  "Course: ("+courseNum+") " +courseName+  "\n"
 				+ "Seats Available: " +numOfSeatsAvailable+"/"+numOfMaxStudents +"\n"
 				+ "Students Registerd: [" +listOfStudents.inOrder(root) + "]";  
+		return toString;
 	}
 	
-	public Node setRoot(Node newInsert) {
+	public void setRoot(Node newInsert) {
 		root = newInsert;
 	}
 	

@@ -1,3 +1,4 @@
+package bgu.spl.net.resources;
 import java.util.*;
 
 public class User {

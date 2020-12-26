@@ -1,3 +1,4 @@
+package bgu.spl.net.resources;
 import java.util.Vector;
 
 public class Student extends User{

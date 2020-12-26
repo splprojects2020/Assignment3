@@ -12,6 +12,11 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 	
 	public Vector<String> process(Vector<String> msg){
 		int opCode = Integer.parseInt(msg.get(0));
+		Vector<String> output = new Vector<String>();
+		switch(opCode) {
+		case 1:
+			//if()
+		}
 		
 		return null;
 	}
