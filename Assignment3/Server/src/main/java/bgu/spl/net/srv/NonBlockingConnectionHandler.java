@@ -46,8 +46,8 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
             buf.flip();
             return () -> {
                 try {
-                    while (buf.hasRemaining()) {
-                        T nextMessage = encdec.decodeNextByte(buf.get());
+                    while (buf.hasRemaining()) {//position < limit
+                        T nextMessage = encdec.decodeNextByte(buf.get());//buf[position++]
                         if (nextMessage != null) {
                             T response = protocol.process(nextMessage);
                             if (response != null) {
@@ -85,7 +85,7 @@ public class NonBlockingConnectionHandler<T> implements ConnectionHandler<T> {
             try {
                 ByteBuffer top = writeQueue.peek();
                 chan.write(top);
-                if (top.hasRemaining()) {
+                if (top.hasRemaining()) {//position < limit
                     return;
                 } else {
                     writeQueue.remove();

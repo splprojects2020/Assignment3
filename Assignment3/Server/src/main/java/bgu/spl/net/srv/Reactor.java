@@ -57,7 +57,7 @@ public class Reactor<T> implements Server<T> {
 
                     if (!key.isValid()) {
                         continue;
-                    } else if (key.isAcceptable()) {
+                    } else if (key.isAcceptable()) { //key.interested_ops & OP_ACCEPT!=0
                         handleAccept(serverSock, selector);
                     } else {
                         handleReadWrite(key);
@@ -107,14 +107,20 @@ public class Reactor<T> implements Server<T> {
         @SuppressWarnings("unchecked")
         NonBlockingConnectionHandler<T> handler = (NonBlockingConnectionHandler<T>) key.attachment();
 
-        if (key.isReadable()) {
+        if (key.isReadable()) {//can we read from this channel
             Runnable task = handler.continueRead();
             if (task != null) {
                 pool.submit(handler, task);
             }
+            /*
+             CHECK IF NEEDED TO DELETE (THIS CODE FROM DOLAV PRACTICE!!
+             else if(!key.isValid()){
+             //if no task was created key mat not be valid and throw exception
+              return;
+             */
         }
 
-	    if (key.isValid() && key.isWritable()) {
+	    if (key.isValid() && key.isWritable()) {//can we write to this channel
             handler.continueWrite();
         }
     }
