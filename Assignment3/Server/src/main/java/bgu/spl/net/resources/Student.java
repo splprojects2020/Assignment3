@@ -7,12 +7,13 @@ public class Student extends User{
 	
 	public Student(String userName,String password) {
 		super(userName,password);
+		registerdCourses=new Vector<Integer>();
 	}
 	public Vector<Integer> getRegisterdCourses(){
 		return registerdCourses;
 	}
 	public boolean registerCourse(int courseNum) {
-		if(database.registerCourse(courseNum,userName)) {
+		if(database.registerCourse(courseNum,this)) {
 			registerdCourses.add(courseNum);
 			return true;
 		}
@@ -28,9 +29,14 @@ public class Student extends User{
 		return "NOT REGISTERD";
 	}
 	public boolean unregister(int courseNum) {
-		if(!registerdCourses.contains(courseNum)) return false;
+		if(!registerdCourses.contains(courseNum)) 
+			return false;
 		database.unregisterStudentFromCourse(userName,courseNum);
+		registerdCourses.remove(courseNum);
 		return true;
+	}
+	public String getMyCourses() {
+		return registerdCourses.toString();
 	}
 
 }

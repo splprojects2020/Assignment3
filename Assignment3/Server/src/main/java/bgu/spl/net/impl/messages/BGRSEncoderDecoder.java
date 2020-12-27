@@ -2,7 +2,10 @@ package bgu.spl.net.impl.messages;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
+import java.util.ArrayList;
+
 import bgu.spl.net.api.*;
 
 public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>{
@@ -65,19 +68,60 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     		try {return msg;}
     		finally {reset();}
     	}
-  	
     	return null;
     }
 
 
     public byte[] encode(Vector<String> message) {
-    	String toString="";
-    	for(int i=0;i<message.size()-1;i++)
-    		toString = toString + message.get(i);
-    	  return toString.getBytes();
+     	
+    	short opCode=Short.parseShort(message.get(0));
+    	short messageOpCode=Short.parseShort(message.get(1));
+    	byte[] output=shortToBytes(opCode,messageOpCode);
+		
+		if(message.size()<3) { //ERROR or no additional information for ACK
+			return output;
+		}
+		//adds additional information for ACK
+		String optional=message.get(2);
+		byte []optionalByte=optional.getBytes();
+		
+		return mergeBytes(output,optionalByte);
+		      	    		  
     }
-    public short bytesToShort(byte[] byteArr)
-    {
+    
+    private byte[]mergeBytes(byte[] arr1,byte[] arr2){
+    	
+    	byte []merged=new byte[arr1.length+arr2.length];
+		for(int i=0;i<merged.length;i++) {
+			if(i<arr1.length) {
+				merged[i]=arr1[i];
+			}
+			else {
+				merged[i]=arr2[i-arr1.length];
+			}
+		}
+		return merged;	
+    }
+    
+    
+    public byte[] shortToBytes(short num) {
+        byte[] bytesArr = new byte[2];
+        bytesArr[0] = (byte)((num >> 8) & 0xFF);
+        bytesArr[1] = (byte)(num & 0xFF);
+        return bytesArr;
+    }
+    
+    public byte[] shortToBytes(short num1,short num2) {
+        byte[] bytesArr = new byte[4];
+        bytesArr[0] = (byte)((num1 >> 8) & 0xFF);
+        bytesArr[1] = (byte)(num1 & 0xFF);
+        bytesArr[2] = (byte)((num2 >> 8) & 0xFF);
+        bytesArr[3] = (byte)(num2 & 0xFF);
+       
+        return bytesArr;
+    }
+    
+    public short bytesToShort(byte[] byteArr) {
         short result = (short)((byteArr[0] & 0xff) << 8);
         result += (short)(byteArr[1] & 0xff);
         return result;

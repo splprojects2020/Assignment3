@@ -71,6 +71,10 @@ public class Database {
 		return true;
 	}
 	
+	public User getUser(String userName) {
+		return usersList.get(userName);		
+	}
+	
 	public boolean register(String userName,String password,boolean admin) {
 		if(usersList.containsKey(userName))
 			return false;
@@ -84,25 +88,29 @@ public class Database {
 	}
 	public boolean login(String userName,String password) {
 		User currentUser = usersList.get(userName);
-		if(currentUser==null) return false;
-		if(!currentUser.getPassword().equals(password)) return false;
+		if(currentUser==null || currentUser.isLogged()) //check if the user is not registered or already logged in
+			return false;
+		if(!currentUser.getPassword().equals(password))
+			return false;
 		currentUser.login();
 		return true;
 	}
-	public boolean logout() {//TODO
-		return false;
+	public boolean logout(User currentUser) {//TODO
+		if(currentUser==null)
+			return false;
+		currentUser.logout();
+		return true;
 	}
 	
-	public boolean registerCourse(int courseName,String userName) {
-		Student currentUser = (Student) usersList.get(userName);
-		if(!currentUser.isLogged) return false;
+	public boolean registerCourse(int courseName,Student currentUser) {
+
 		Course desiredCourse = coursesList.get(courseName);
 		if(desiredCourse==null || desiredCourse.getNumOfSeatsAvailable()<=0 |
 				!currentUser.getRegisterdCourses().containsAll(desiredCourse.getKdamCoursesList()) |
 				currentUser.getRegisterdCourses().contains(desiredCourse.getCourseNum())) 
 			return false;
 		desiredCourse.takeSeat();
-		desiredCourse.setRoot(desiredCourse.getListOfStudents().insert(desiredCourse.getRoot(), userName));	
+		desiredCourse.setRoot(desiredCourse.getListOfStudents().insert(desiredCourse.getRoot(), currentUser.getUsername()));	
 		return true;
 	}
 	public String courseStatus(int courseNum) {	
@@ -121,4 +129,9 @@ public class Database {
 		desiredCourse.setRoot(desiredCourse.getListOfStudents().deleteNode(desiredCourse.getRoot(), studentName));
 		desiredCourse.releaseSeat();
 	}
+	public String kdamCheck(int courseNumber) {
+		Course desiredCourse=coursesList.get(courseNumber);
+		return desiredCourse.kdamCheck();
+	}
+	
 }

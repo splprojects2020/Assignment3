@@ -20,11 +20,21 @@ public class Course {
 		this.numOfSeatsAvailable=numOfMaxStudents;
 		this.root=null;
 	}
-	public int getCourseNum() { return courseNum;}
-	public String courseName() {return courseName;}
-	public Vector<Integer> getKdamCoursesList() {return kdamCoursesList;}
-	public String kdamCheck() {return kdamCoursesList.toString();}
-	public int getNumOfMaxStudenst() {return numOfMaxStudents;}
+	public int getCourseNum() { 
+		return courseNum;
+	}
+	public String courseName() {
+		return courseName;
+	}
+	public Vector<Integer> getKdamCoursesList() {
+		return kdamCoursesList;
+	}
+	public String kdamCheck() {
+		return kdamCoursesList.toString();
+	}
+	public int getNumOfMaxStudenst() {
+		return numOfMaxStudents;
+	}
 	public int getNumOfSeatsAvailable() {return numOfSeatsAvailable;}
 	public AVLTree getListOfStudents() {return listOfStudents;}
 	public Node getRoot() {return root;}
