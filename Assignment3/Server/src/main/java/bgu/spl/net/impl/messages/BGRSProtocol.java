@@ -9,7 +9,7 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 	
 	private boolean shouldTerminate=false;
 	private Database database= Database.getInstance();
-	private User loggedUser=null;
+	private User loggedUser=null; //null if not logged
 	public Vector<String> process(Vector<String> msg){
 		Integer opCode = Integer.parseInt(msg.get(0));
 		Vector<String> output = new Vector<String>();
@@ -17,21 +17,21 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 		Boolean failed=false;
 		switch(opCode) {
 		case 1://Admin register
-			if(database.register(msg.get(1), msg.get(2),true)) {//return ACK			
+			if(loggedUser==null && database.register(msg.get(1), msg.get(2),true)) {//return ACK			
 				output.add("12");
 				output.add("1");//
 				return output;
 			}
 			failed=true;
 		case 2://Student register
-			if(database.register(msg.get(1), msg.get(2),false)) {//return ACK
+			if(loggedUser==null && database.register(msg.get(1), msg.get(2),false)) {//return ACK
 				output.add("12");
 				output.add("2");
 				return output;
 			}
 			failed=true;
 		case 3://Login 
-			if(database.login(msg.get(1), msg.get(2))) {//return ACK	
+			if(loggedUser==null && database.login(msg.get(1), msg.get(2))) {//return ACK	
 				loggedUser=database.getUser(msg.get(1)); 
 				output.add("12");
 				output.add("3");
@@ -43,6 +43,7 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 			if(database.logout(loggedUser)) {//return ACK
 				output.add("12");
 				output.add("4");
+				loggedUser=null; 
 				return output;
 			}
 			failed=true;	
