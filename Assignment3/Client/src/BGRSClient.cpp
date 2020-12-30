@@ -8,7 +8,8 @@
 */
 int main (int argc, char *argv[]) {
     readFromConsoleTask readFromConsoleTask;
-    std::thread th1(&readFromConsoleTask::run,&readFromConsoleTask);
-    th1.join();
+    readFromConsoleTask.run();
+    //std::thread th1(&readFromConsoleTask::run,&readFromConsoleTask);
+    //th1.join();
     return 0;
 }
