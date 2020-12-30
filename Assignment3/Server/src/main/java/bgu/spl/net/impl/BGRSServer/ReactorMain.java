@@ -8,7 +8,7 @@ public class ReactorMain {
 	public static void main(String[] args) {
 		System.out.println("ReactorMain");
 	
-		Server<Vector<String>> reactorServer=Server.reactor(4, 6666, ()->new BGRSProtocol(), ()->new BGRSEncoderDecoder());
+		Server<Vector<String>> reactorServer=Server.reactor(4, 7777, ()->new BGRSProtocol(), ()->new BGRSEncoderDecoder());
 		reactorServer.serve();
 		
 		

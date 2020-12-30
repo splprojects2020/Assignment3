@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../Assignment3/Client/include/Task.h
+iostream
+-
+thread
+-
+string
+-
+
+../Assignment3/Client/include/connectionHandler.h
+string
+-
+iostream
+-
+boost/asio.hpp
+-
+
+/home/spl211/Desktop/Assignment3/Assignment3/Client/src/BGRSClient.cpp
+stdlib.h
+-
+connectionHandler.h
+-
+Task.h
+-
+thread
+-
+
