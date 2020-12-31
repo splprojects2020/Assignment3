@@ -16,9 +16,9 @@ using std::string;
 class MessageEncoderDecoder {
 public:
     MessageEncoderDecoder();
-    char* encode(string &consoleInput);
+    string encode(string &consoleInput);
     string decode();
-    char* shortToBytes(short & shortNum);
+    void shortToBytes(short num, char* bytesArr);
     short getShortOpCode(string & opCodeString);
 };
 

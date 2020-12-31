@@ -4,10 +4,12 @@
 #include <iostream>
 #include <thread>
 #include <string>
+#include <connectionHandler.h>
+
 class Task {
 public:
     Task();
-    virtual void run()=0;
+    virtual void run(ConnectionHandler &connectionHandler)=0;
 
 protected:
     bool terminated;
@@ -15,7 +17,7 @@ protected:
 class readFromConsoleTask: public Task{
 public:
     readFromConsoleTask();
-    virtual void run();
+    virtual void run(ConnectionHandler &connectionHandler);
 
 };
 /*class readFromSocketTask: public Task{

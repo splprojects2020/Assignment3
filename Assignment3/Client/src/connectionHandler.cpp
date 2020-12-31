@@ -46,7 +46,6 @@ bool ConnectionHandler::getBytes(char bytes[], unsigned int bytesToRead) {
     }
     return true;
 }
-
 bool ConnectionHandler::sendBytes(const char bytes[], int bytesToWrite) {
     int tmp = 0;
 	boost::system::error_code error;

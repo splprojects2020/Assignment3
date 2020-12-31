@@ -4,11 +4,11 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/spl211/Desktop/Assignment3/Assignment3/Client/src/BGRSClient.cpp" "/home/spl211/Desktop/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/BGRSClient.cpp.o"
-  "/home/spl211/Desktop/Assignment3/Assignment3/Client/src/MessageEncoderDecoder.cpp" "/home/spl211/Desktop/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/MessageEncoderDecoder.cpp.o"
-  "/home/spl211/Desktop/Assignment3/Assignment3/Client/src/Task.cpp" "/home/spl211/Desktop/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/Task.cpp.o"
-  "/home/spl211/Desktop/Assignment3/Assignment3/Client/src/connectionHandler.cpp" "/home/spl211/Desktop/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/connectionHandler.cpp.o"
-  "/home/spl211/Desktop/Assignment3/Assignment3/Client/src/echoClient.cpp" "/home/spl211/Desktop/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/echoClient.cpp.o"
+  "/home/spl211/CLionProjects/Assignment3/Assignment3/Client/src/BGRSClient.cpp" "/home/spl211/CLionProjects/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/BGRSClient.cpp.o"
+  "/home/spl211/CLionProjects/Assignment3/Assignment3/Client/src/MessageEncoderDecoder.cpp" "/home/spl211/CLionProjects/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/MessageEncoderDecoder.cpp.o"
+  "/home/spl211/CLionProjects/Assignment3/Assignment3/Client/src/Task.cpp" "/home/spl211/CLionProjects/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/Task.cpp.o"
+  "/home/spl211/CLionProjects/Assignment3/Assignment3/Client/src/connectionHandler.cpp" "/home/spl211/CLionProjects/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/connectionHandler.cpp.o"
+  "/home/spl211/CLionProjects/Assignment3/Assignment3/Client/src/echoClient.cpp" "/home/spl211/CLionProjects/Assignment3/cmake-build-debug/CMakeFiles/Assignment3.dir/Assignment3/Client/src/echoClient.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
