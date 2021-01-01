@@ -1,5 +1,6 @@
 package bgu.spl.net.impl.messages;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Vector;
 import bgu.spl.net.api.*;
