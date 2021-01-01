@@ -34,7 +34,7 @@ string MessageEncoderDecoder::encode(string &consoleInput) {
         shortToBytes(courseNumToShort,courseNumAsBytes);
         result+=courseNumAsBytes[0];
         result+=courseNumAsBytes[1];
-       // result.append(courseNumAsBytes); //appends subInput to result
+        // result.append(courseNumAsBytes); //appends subInput to result
     }
     return result;
 }
