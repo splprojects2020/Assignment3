@@ -25,7 +25,6 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     		opCode=bytesToShort(opArr); //returns opCode
     		msg.add(String.valueOf(opCode));
     		opCounter=-1;
-    		System.out.println(opCode);
        	 if(opCode==4 || opCode==11) //LOGOUT or MYCOURSES	**WORKING**
      		finished=true;
     	}
@@ -62,7 +61,7 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     			pushByte(nextByte);
     		}
     	}
-    	}	
+    }	
     	if(finished) {
     		try {
     			Vector<String> result = (Vector<String>)msg.clone();
@@ -148,7 +147,6 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     	isDone=false;
     	finished=false;
     	msg.clear();
-    	System.out.print("cleared");
     }
     private String popString() {
         //notice that we explicitly requesting that the string will be decoded from UTF-8
