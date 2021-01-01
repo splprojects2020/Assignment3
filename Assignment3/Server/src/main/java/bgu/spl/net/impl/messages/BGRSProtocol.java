@@ -11,7 +11,9 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 	private Database database= Database.getInstance();
 	private User loggedUser=null; //null if not logged
 	public Vector<String> process(Vector<String> msg){
-		Integer opCode = Integer.parseInt(msg.get(0));
+		Integer opCode=-1;
+		if(!msg.isEmpty())
+			 opCode = Integer.parseInt(msg.get(0));
 		Vector<String> output = new Vector<String>();
 		
 		Boolean failed=false;

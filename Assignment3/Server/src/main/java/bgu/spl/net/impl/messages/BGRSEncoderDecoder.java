@@ -23,13 +23,14 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     	if(opCounter>0) {
     		opArr[2-opCounter--]=nextByte;
     	}
-    	else if(opCounter==0) {
+    	if(opCounter==0) {
     		opCode=bytesToShort(opArr); //returns opCode
+    		//System.out.println(opCode);
     		msg.add(String.valueOf(opCode));
+    		opCounter=-1;
     	}
-    	
-    	
-    	else if(opCode>=1 && opCode<=3){//ADMINREG or STUDENTREG or LOGIN
+    	else {
+    	 if(opCode>=1 && opCode<=3){//ADMINREG or STUDENTREG or LOGIN
     		if(nextByte=='\0') {
     			msg.add(popString());
     			if(isDone) {
@@ -41,10 +42,10 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     			pushByte(nextByte);
     		}
     	}
-    	else if(opCode==4 || opCode==11) {//LOGOUT or MYCOURSES	
+    	 if(opCode==4 || opCode==11) {//LOGOUT or MYCOURSES	
     		finished=true;
     	}
-    	else if(opCode>=5 && opCode<=7 || opCode==9 || opCode==10) {//COURSEREG or KDAMCHECK or COURSESTAT or ISREGISTERED or UNREGISTER	
+    	 if(opCode>=5 && opCode<=7 || opCode==9 || opCode==10) {//COURSEREG or KDAMCHECK or COURSESTAT or ISREGISTERED or UNREGISTER	
     		opCounter=2;
         	if(opCounter>0) {
         		opArr[2-opCounter--]=nextByte;
@@ -55,7 +56,7 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
         		finished=true;
         	}
     	}
-    	else if(opCode==8) {//STUDENTSTAT
+    	 if(opCode==8) {//STUDENTSTAT
     		if(nextByte=='\0') {
     			msg.add(popString());
     			finished=true;
@@ -64,8 +65,12 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     			pushByte(nextByte);
     		}
     	}
+    	}
     	if(finished) {
-    		try {return msg;}
+    		try {
+    			Vector<String> result = (Vector<String>)msg.clone();
+    			return result;
+    			}
     		finally {reset();}
     	}
     	return null;
@@ -73,9 +78,12 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
 
 
     public byte[] encode(Vector<String> message) {
-     	
-    	short opCode=Short.parseShort(message.get(0));
-    	short messageOpCode=Short.parseShort(message.get(1));
+    	short opCode=-1;
+    	short messageOpCode=-1;
+     	if(!message.isEmpty()) {
+     		opCode=Short.parseShort(message.get(0));
+     		messageOpCode=Short.parseShort(message.get(1));
+     		}
     	byte[] output=shortToBytes(opCode,messageOpCode);
 		
 		if(message.size()<3) { //ERROR or no additional information for ACK
@@ -140,6 +148,7 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
     	isDone=false;
     	finished=false;
     	msg.clear();
+    	System.out.print("cleared");
     }
     private String popString() {
         //notice that we explicitly requesting that the string will be decoded from UTF-8
