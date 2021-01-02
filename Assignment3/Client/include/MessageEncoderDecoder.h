@@ -19,12 +19,15 @@ public:
     string encode(string &consoleInput);
     string decode(char nextByte);
     void shortToBytes(short num, char* bytesArr);
-    short bytesToShort(char bytesArr);
+    short bytesToShort(char *bytesArr);
+    void Reset();
     short getShortOpCode(string & opCodeString);
     int opCounter;
-    short opCode;
-    int msgOpCode;
+    short opCodeShort;
     string result;
+    string opCodeByte;
+
+
 };
 
 

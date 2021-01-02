@@ -88,6 +88,7 @@ public class BGRSEncoderDecoder implements MessageEncoderDecoder<Vector<String>>
 		}
 		//adds additional information for ACK
 		String optional=message.get(2);
+		optional+='\0';
 		byte []optionalByte=optional.getBytes();
 		
 		return mergeBytes(output,optionalByte);

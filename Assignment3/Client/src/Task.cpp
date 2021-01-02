@@ -1,31 +1,39 @@
-#include <MessageEncoderDecoder.h>
+
 #include "Task.h"
 
 Task::Task(): terminated(false){}
 void Task::run(ConnectionHandler &connectionHandler) {}
 
-readFromConsoleTask::readFromConsoleTask() = default;
+//readFromConsoleTask
+readFromConsoleTask::readFromConsoleTask()=default;
 void readFromConsoleTask::run(ConnectionHandler &connectionHandler) {
     using namespace std;
-    MessageEncoderDecoder encDec;
     while(!terminated) {
+        //THREAD 1
         string consoleInput;
-        cout << "CLIENT#1>";
+        cout << "CLIENT#1> ";
         getline(cin, consoleInput);
         string output = encDec.encode(consoleInput);
-        connectionHandler.sendBytes(output.c_str(),output.length());
+        if(output!="INPUT ERROR") {//check if the input from the keyboard is valid
+            connectionHandler.sendBytes(output.c_str(), output.length());
+        }
+    }
+    std::this_thread::yield();
+
+}
+
+//readFromSocketTask
+readFromSocketTask::readFromSocketTask()=default;
+
+void readFromSocketTask::run(ConnectionHandler &connectionHandler) {
+    while(!terminated) {
         char byte;
         string result = "not-finished";
-        while(result=="not-finished"){
-            connectionHandler.getBytes(&byte,1);
-            cout<< byte;
+        while (result == "not-finished") {
+            connectionHandler.getBytes(&byte, 1);
             result = encDec.decode(byte);
         }
-        for(int i=0;i<result.length();i++){
-            cout << result[i];
-        }
-        // if(input=="close")
-        //terminated=true;
+        terminated = protocol.process(result);
     }
     std::this_thread::yield();
 

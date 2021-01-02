@@ -1,9 +1,9 @@
 package bgu.spl.net.resources;
-import java.util.HashMap;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Passive object representing the Database where all courses and users are stored.
@@ -15,12 +15,12 @@ import java.util.Vector;
  */
 public class Database {
 
-	public HashMap<Integer,Course> coursesList; //CHANGED FROM PRIVATE
-	public HashMap<String,User> usersList;//CHANGED FROM PRIVATE
+	public ConcurrentHashMap<Integer,Course> coursesList; //CHANGED FROM PRIVATE
+	public ConcurrentHashMap<String,User> usersList;//CHANGED FROM PRIVATE
 	//to prevent user from creating new Database
 	private Database() {
-		coursesList = new HashMap<Integer,Course>();
-		usersList = new HashMap<String,User>();
+		coursesList = new ConcurrentHashMap<Integer,Course>();
+		usersList = new ConcurrentHashMap<String,User>();
 	}
 
 	/**

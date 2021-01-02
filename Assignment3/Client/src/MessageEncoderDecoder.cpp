@@ -1,6 +1,7 @@
 #include <MessageEncoderDecoder.h>
 #include <stdio.h>
-MessageEncoderDecoder::MessageEncoderDecoder():opCounter(4),opCode(-1),msgOpCode(-1) {}
+MessageEncoderDecoder::MessageEncoderDecoder():opCounter(0),opCodeShort(0) {
+}
 string MessageEncoderDecoder::encode(string &consoleInput) {
     string result;
     string opCodeString="";
@@ -9,6 +10,9 @@ string MessageEncoderDecoder::encode(string &consoleInput) {
         opCodeString += consoleInput[i];
     }
     short opCodeAsShort = getShortOpCode(opCodeString);
+    if(opCodeAsShort==-1){
+        return "INPUT ERROR";
+    }
     char opCodeAsBytes[2];
 
     shortToBytes(opCodeAsShort,opCodeAsBytes);
@@ -37,21 +41,45 @@ string MessageEncoderDecoder::encode(string &consoleInput) {
 }
 
 string MessageEncoderDecoder::decode(char nextByte) {
-    if(opCounter>0) {
-        result += nextByte;
-        opCounter--;
-    }
-    if(opCounter==0){
-        opCounter=-1;
-        if(result.substr(0,1)=="13" || result.substr(2,3)>="01" & result.substr(2,3)<="05"
-            | result.substr(2,3)=="10")//ERROR 1-5 10
-            return result;
+
+
+    if(opCounter<4) { //opCodeToString
+        opCodeByte += nextByte;
+        if(opCounter==3||opCounter==1){
+            opCodeShort = (short)((opCodeByte[opCounter-1] & 0xff) << 8);
+            opCodeShort += (short)(opCodeByte[opCounter] & 0xff);
+            result+=to_string(opCodeShort);
         }
-    else {
-       if(nextByte==0) return result;
-       result+=nextByte;
+        opCounter++;
+    }
+    if(opCounter>4){
+        if(nextByte=='\0'){
+            string tmp=result;
+            Reset();
+            return tmp;
+        }
+        if(opCounter==5){
+            result+="\n";
+            opCounter++;
+        }
+        result+=nextByte;
+    }
+
+    if(opCounter==4){
+        opCounter++;
+        if(result.substr(0,2)=="13"|| (opCodeShort>=1 && opCodeShort<=5 || opCodeShort==10)) {//Error or ACK without optional
+            string tmp=result;
+            Reset();
+            return tmp;
+        }
     }
     return "not-finished";
+}
+
+void MessageEncoderDecoder::Reset(){
+    opCounter=0;
+    result="";
+    opCodeByte="";
 }
 
 
@@ -59,7 +87,7 @@ void MessageEncoderDecoder::shortToBytes(short num, char* bytesArr){
     bytesArr[0] = ((num >> 8) & 0xFF);
     bytesArr[1] = (num & 0xFF);
 }
-short bytesToShort(char* bytesArr)
+short  MessageEncoderDecoder::bytesToShort(char *bytesArr)
 {
     auto result = (short)((bytesArr[0] & 0xff) << 8);
     result += (short)(bytesArr[1] & 0xff);
@@ -80,5 +108,8 @@ short MessageEncoderDecoder::getShortOpCode(string &opCodeString) {
     commands["MYCOURSES"]=11;
     commands["ACK"]=12;
     commands["ERR"]=13;
+    if(commands[opCodeString]==0){
+        return -1;
+    }
     return commands[opCodeString];
 }

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <connectionHandler.h>
 #include <Task.h>
-#include <thread>
+
 
 /**
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
@@ -16,9 +16,12 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-    readFromConsoleTask readFromConsoleTask;
-    readFromConsoleTask.run(connectionHandler);
-    //std::thread th1(&readFromConsoleTask::run,&readFromConsoleTask);
-    //th1.join();
+    readFromConsoleTask* readFromConsoleTask1= new readFromConsoleTask();
+    readFromSocketTask* readFromSocketTask1= new readFromSocketTask();
+    std::thread th1(&readFromConsoleTask::run,readFromConsoleTask1,std::ref(connectionHandler));
+    std::thread th2(&readFromSocketTask::run,readFromSocketTask1,std::ref(connectionHandler));
+    th1.join();
+    th2.join();
+
     return 0;
 }
