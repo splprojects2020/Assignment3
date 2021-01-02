@@ -15,8 +15,8 @@ import java.util.Vector;
  */
 public class Database {
 
-	private HashMap<Integer,Course> coursesList;
-	private HashMap<String,User> usersList;
+	public HashMap<Integer,Course> coursesList; //CHANGED FROM PRIVATE
+	public HashMap<String,User> usersList;//CHANGED FROM PRIVATE
 	//to prevent user from creating new Database
 	private Database() {
 		coursesList = new HashMap<Integer,Course>();
@@ -38,7 +38,7 @@ public class Database {
 	 * loades the courses from the file path specified 
 	 * into the Database, returns true if successful.
 	 */
-	boolean initialize(String coursesFilePath) {
+	public boolean initialize(String coursesFilePath) {
 		try {
 			Scanner scanner = new Scanner(new File(coursesFilePath));
 			while (scanner.hasNextLine()) {

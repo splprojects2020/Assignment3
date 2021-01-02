@@ -3,6 +3,7 @@ package bgu.spl.net.resources;
 import java.util.*;
 
 public class AVLTree {
+	public AVLTree() {}
 	
     public class Node {
         private Node left, right, parent;
@@ -104,11 +105,16 @@ public class AVLTree {
         return height(N.left) - height(N.right);
     }
 
-    public String inOrder(Node root) {
+    private String inOrder(Node root) {
     	if(root==null) return "";
     	return inOrder(root.left) + root.studentName + "," + inOrder(root.right);
     }
-
+    public String printInOrder(Node root) {
+    	String toString = inOrder(root);
+    	if(!toString.isEmpty())
+    		toString = toString.substring(0, toString.length()-1);
+    	return toString;
+    }
     private Node minValueNode(Node node) {
         Node current = node;
         /* loop down to find the leftmost leaf */

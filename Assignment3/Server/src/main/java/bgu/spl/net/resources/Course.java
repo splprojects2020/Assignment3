@@ -19,6 +19,7 @@ public class Course {
 		this.numOfMaxStudents=numOfMaxStudents;
 		this.numOfSeatsAvailable=numOfMaxStudents;
 		this.root=null;
+		this.listOfStudents=new AVLTree();
 	}
 	public int getCourseNum() { 
 		return courseNum;
@@ -42,7 +43,7 @@ public class Course {
 		String toString = 
 				  "Course: ("+courseNum+") " +courseName+  "\n"
 				+ "Seats Available: " +numOfSeatsAvailable+"/"+numOfMaxStudents +"\n"
-				+ "Students Registerd: [" +listOfStudents.inOrder(root) + "]";  
+				+ "Students Registerd: [" +listOfStudents.printInOrder(root) + "]";  
 		return toString;
 	}
 	

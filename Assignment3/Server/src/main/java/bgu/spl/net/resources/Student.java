@@ -32,7 +32,7 @@ public class Student extends User{
 		if(!registerdCourses.contains(courseNum)) 
 			return false;
 		database.unregisterStudentFromCourse(userName,courseNum);
-		registerdCourses.remove(courseNum);
+		registerdCourses.remove((Integer)courseNum);
 		return true;
 	}
 	public String getMyCourses() {

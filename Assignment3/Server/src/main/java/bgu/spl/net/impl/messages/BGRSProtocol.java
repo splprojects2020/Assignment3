@@ -15,58 +15,74 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 		if(!msg.isEmpty())
 			 opCode = Integer.parseInt(msg.get(0));
 		Vector<String> output = new Vector<String>();
-		
+		//System.out.println(msg.toString());
 		Boolean failed=false;
 		switch(opCode) {
 		case 1://Admin register
 			if(loggedUser==null && database.register(msg.get(1), msg.get(2),true)) {//return ACK			
 				output.add("12");
 				output.add("1");//
+				System.out.println(database.usersList.toString());
+				System.out.println("Message: " + output.toString());
 				return output;
 			}
 			failed=true;
+			System.out.println(failed);
+			break;
 		case 2://Student register
 			if(loggedUser==null && database.register(msg.get(1), msg.get(2),false)) {//return ACK
 				output.add("12");
 				output.add("2");
+				System.out.println(database.usersList.toString());
+				System.out.println("Message: " + output.toString());
 				return output;
 			}
 			failed=true;
+			break;
 		case 3://Login 
 			if(loggedUser==null && database.login(msg.get(1), msg.get(2))) {//return ACK	
 				loggedUser=database.getUser(msg.get(1)); 
 				output.add("12");
 				output.add("3");
-			
+				System.out.println("Logged?: " + loggedUser.isLogged() + " username: " + loggedUser.getUsername());
+				System.out.println("Message: " + output.toString());
 				return output;
 			}	
 			failed=true;
+			break;
 		case 4://Logout 
 			if(database.logout(loggedUser)) {//return ACK
 				output.add("12");
 				output.add("4");
-				loggedUser=null; 
+				System.out.println("Logged?: " + loggedUser.isLogged() + " username: " + loggedUser.getUsername());
+				System.out.println("Message: " + output.toString());
+				loggedUser=null;
 				return output;
 			}
 			failed=true;	
-		
+			break;
 		case 5://Course Register
 			if(loggedUser!=null && loggedUser instanceof Student) {
 				if(((Student)loggedUser).registerCourse(Integer.parseInt(msg.get(1)))) {
 					output.add("12");
 					output.add("5");
+					System.out.println(database.courseStatus(Integer.parseInt(msg.get(1))));
+					System.out.println("Message: " + output.toString());
 					return output;
 				}
 			}
-			failed=true;	
+			failed=true;
+			break;
 		case 6://Kdam Check
 			if(loggedUser!=null) {
 				output.add("12");
 				output.add("6");
 				output.add(database.kdamCheck(Integer.parseInt(msg.get(1))));
+				System.out.println("Message: " + output.toString());
 				return output;
 			}
-			failed=true;	
+			failed=true;
+			break;
 		case 7://Course Status
 			if(loggedUser!=null && loggedUser instanceof Admin) {
 				String status=((Admin)loggedUser).courseStatus(Integer.parseInt(msg.get(1)));
@@ -74,10 +90,12 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 					output.add("12");
 					output.add("7");
 					output.add(status);
+					System.out.println("Message: " + output.toString());
 					return output;
 				}
-				failed=true;
 			}
+				failed=true;
+				break;
 		case 8://Student Status
 			if(loggedUser!=null && loggedUser instanceof Admin) {
 				String status=((Admin)loggedUser).studentStatus(msg.get(1));
@@ -85,41 +103,52 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 					output.add("12");
 					output.add("8");
 					output.add(status);
+					System.out.println("Message: " + output.toString());
 					return output;
 				}
-				failed=true;
 			}
+				failed=true;
+				break;
 		case 9://Is Registered
 			if(loggedUser!=null && loggedUser instanceof Student) {
 				String status=((Student)loggedUser).isRegisterdToCourse(Integer.parseInt(msg.get(1)));				
 				output.add("12");
 				output.add("9");
 				output.add(status);
+				System.out.println("Message: " + output.toString());
 				return output;		
 			}
 			failed=true;
+			break;
 		case 10://Unregister Course
 			if(loggedUser!=null && loggedUser instanceof Student) {
-				if(((Student)loggedUser).unregister(Integer.parseInt(msg.get(1))));
-				output.add("12");
-				output.add("10");
-				return output;		
+				if(((Student)loggedUser).unregister(Integer.parseInt(msg.get(1)))) {
+					output.add("12");
+					output.add("10");
+					System.out.println(database.courseStatus(Integer.parseInt(msg.get(1))));
+					System.out.println("Message: " + output.toString());
+					return output;
+				}
 			}
 			failed=true;
+			break;
 			
-		case 11:
+		case 11://MYCOURSES
 			if(loggedUser!=null && loggedUser instanceof Student) {
 				String status=	((Student)loggedUser).getMyCourses();
 				output.add("12");
 				output.add("11");
 				output.add(status);
+				System.out.println("Message: " + output.toString());
 				return output;		
 			}
 			failed=true;	
-		}
+			break;
+		}System.out.println(failed);
 		if(failed) {//return Error
 			output.add("13");
 			output.add(opCode.toString());
+			System.out.println("ERROR Message: " + output.toString());
 		}
 			
 		
