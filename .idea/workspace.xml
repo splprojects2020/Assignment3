@@ -7,28 +7,53 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09d93eb1-47c3-46a7-a82d-c525f5fb0290" name="Default Changelist" comment="" />
+    <list default="true" id="09d93eb1-47c3-46a7-a82d-c525f5fb0290" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Assignment3/Server/src/main/java/bgu/spl/net/impl/messages/BGRSProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/Server/src/main/java/bgu/spl/net/impl/messages/BGRSProtocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assignment3/Server/src/main/java/bgu/spl/net/resources/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment3/Server/src/main/java/bgu/spl/net/resources/Database.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectId" id="1mVYShgqwEbFK3WQC221J8I02ei" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Assignment3g" />
+  </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="09d93eb1-47c3-46a7-a82d-c525f5fb0290" name="Default Changelist" comment="" />
+      <created>1609580226690</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1609580226690</updated>
+      <workItem from="1609580227862" duration="17000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

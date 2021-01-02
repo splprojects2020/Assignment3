@@ -1,6 +1,6 @@
 #include <MessageEncoderDecoder.h>
-
 #include "Task.h"
+
 Task::Task(): terminated(false){}
 void Task::run(ConnectionHandler &connectionHandler) {}
 
@@ -14,20 +14,16 @@ void readFromConsoleTask::run(ConnectionHandler &connectionHandler) {
         getline(cin, consoleInput);
         string output = encDec.encode(consoleInput);
         connectionHandler.sendBytes(output.c_str(),output.length());
-
-        /*string input = "LOGIN AMIT IMGAT69";
-        string final=encDec.encode(input);
-        const char* finalCountDown=final.c_str();
-
-        cout << "CLIENT#1<";
-
-        for(int i=0;i<final.length();i++){
-            cout << finalCountDown[i];
+        char byte;
+        string result = "not-finished";
+        while(result=="not-finished"){
+            connectionHandler.getBytes(&byte,1);
+            cout<< byte;
+            result = encDec.decode(byte);
         }
-        char amitEfes=finalCountDown[final.length()-1];
-    cout << "\n" <<(int)amitEfes;
-    cout << "CLIENT#1<" << (int)final[0]<<(int)final[1] <<final<< "\n";
-    */
+        for(int i=0;i<result.length();i++){
+            cout << result[i];
+        }
         // if(input=="close")
         //terminated=true;
     }

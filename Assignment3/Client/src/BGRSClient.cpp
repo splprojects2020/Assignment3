@@ -16,7 +16,6 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-
     readFromConsoleTask readFromConsoleTask;
     readFromConsoleTask.run(connectionHandler);
     //std::thread th1(&readFromConsoleTask::run,&readFromConsoleTask);
