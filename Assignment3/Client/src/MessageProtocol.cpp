@@ -8,7 +8,7 @@
 MessageProtocol::MessageProtocol(){}
 
 bool MessageProtocol::process(string &msg) {
-    cout<<"CLIENT#1< ";
+
     if(msg.substr(0,2)=="13"){
         cout<<"ERROR "<<msg.substr(2)<<"\n";
     }

@@ -1,17 +1,16 @@
 
 #include "Task.h"
 
-Task::Task(): terminated(false){}
+Task::Task(bool &shutdown): terminated(shutdown){}
 void Task::run(ConnectionHandler &connectionHandler) {}
 
 //readFromConsoleTask
-readFromConsoleTask::readFromConsoleTask()=default;
+readFromConsoleTask::readFromConsoleTask(bool &shutdown):Task(shutdown){}
 void readFromConsoleTask::run(ConnectionHandler &connectionHandler) {
     using namespace std;
     while(!terminated) {
         //THREAD 1
         string consoleInput;
-        cout << "CLIENT#1> ";
         getline(cin, consoleInput);
         string output = encDec.encode(consoleInput);
         if(output!="INPUT ERROR") {//check if the input from the keyboard is valid
@@ -23,7 +22,7 @@ void readFromConsoleTask::run(ConnectionHandler &connectionHandler) {
 }
 
 //readFromSocketTask
-readFromSocketTask::readFromSocketTask()=default;
+readFromSocketTask::readFromSocketTask(bool &shutdown):Task(shutdown){}
 
 void readFromSocketTask::run(ConnectionHandler &connectionHandler) {
     while(!terminated) {
@@ -34,6 +33,9 @@ void readFromSocketTask::run(ConnectionHandler &connectionHandler) {
             result = encDec.decode(byte);
         }
         terminated = protocol.process(result);
+        if(terminated){
+            connectionHandler.close();
+        }
     }
     std::this_thread::yield();
 

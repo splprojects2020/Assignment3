@@ -16,12 +16,18 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
-    readFromConsoleTask* readFromConsoleTask1= new readFromConsoleTask();
-    readFromSocketTask* readFromSocketTask1= new readFromSocketTask();
+    bool shutDown=false;
+
+    readFromConsoleTask* readFromConsoleTask1= new readFromConsoleTask(shutDown);
+    readFromSocketTask* readFromSocketTask1= new readFromSocketTask(shutDown);
+
     std::thread th1(&readFromConsoleTask::run,readFromConsoleTask1,std::ref(connectionHandler));
     std::thread th2(&readFromSocketTask::run,readFromSocketTask1,std::ref(connectionHandler));
-    th1.join();
-    th2.join();
 
+    th2.join();
+    th1.detach();
+
+    delete readFromConsoleTask1;
+    delete readFromSocketTask1;
     return 0;
 }

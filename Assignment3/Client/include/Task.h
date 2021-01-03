@@ -10,25 +10,25 @@
 
 class Task {
 public:
-    Task();
+    Task(bool &shutdown);
     virtual void run(ConnectionHandler &connectionHandler)=0;
 
 protected:
     MessageEncoderDecoder encDec;
     MessageProtocol protocol;
-    bool terminated;
+    bool &terminated;
 
 };
 class readFromConsoleTask: public Task{
 public:
-    readFromConsoleTask();
+    readFromConsoleTask(bool &shutdown);
     virtual void run(ConnectionHandler &connectionHandler);
 
 
 };
 class readFromSocketTask: public Task{
 public:
-    readFromSocketTask();
+    readFromSocketTask(bool &shutdown);
     virtual void run(ConnectionHandler &connectionHandler);
 
 
