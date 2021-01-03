@@ -8,7 +8,7 @@ import bgu.spl.net.resources.Database;
 public class ReactorMain {
 
 	public static void main(String[] args) {
-		System.out.println("ReactorMain");
+		
 		Database database = Database.getInstance();
 		if(!database.initialize("./Courses.txt"))
 			return;
