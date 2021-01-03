@@ -15,15 +15,12 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 		if(!msg.isEmpty())
 			 opCode = Integer.parseInt(msg.get(0));
 		Vector<String> output = new Vector<String>();
-		//System.out.println(msg.toString());
 		Boolean failed=false;
 		switch(opCode) {
 		case 1://Admin register
 			if(loggedUser==null && database.register(msg.get(1), msg.get(2),true)) {//return ACK			
 				output.add("12");
 				output.add("1");//
-				System.out.println(database.usersList.toString());
-				System.out.println("Message: " + output.toString());
 				return output;
 			}
 			failed=true;
@@ -33,8 +30,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 			if(loggedUser==null && database.register(msg.get(1), msg.get(2),false)) {//return ACK
 				output.add("12");
 				output.add("2");
-				System.out.println(database.usersList.toString());
-				System.out.println("Message: " + output.toString());
 				return output;
 			}
 			failed=true;
@@ -44,8 +39,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 				loggedUser=database.getUser(msg.get(1)); 
 				output.add("12");
 				output.add("3");
-				System.out.println("Logged?: " + loggedUser.isLogged() + " username: " + loggedUser.getUsername());
-				System.out.println("Message: " + output.toString());
 				return output;
 			}	
 			failed=true;
@@ -54,8 +47,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 			if(database.logout(loggedUser)) {//return ACK
 				output.add("12");
 				output.add("4");
-				System.out.println("Logged?: " + loggedUser.isLogged() + " username: " + loggedUser.getUsername());
-				System.out.println("Message: " + output.toString());
 				loggedUser=null;
 				return output;
 			}
@@ -66,8 +57,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 				if(((Student)loggedUser).registerCourse(Integer.parseInt(msg.get(1)))) {
 					output.add("12");
 					output.add("5");
-					System.out.println(database.courseStatus(Integer.parseInt(msg.get(1))));
-					System.out.println("Message: " + output.toString());
 					return output;
 				}
 			}
@@ -78,7 +67,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 				output.add("12");
 				output.add("6");
 				output.add(database.kdamCheck(Integer.parseInt(msg.get(1))));
-				System.out.println("Message: " + output.toString());
 				return output;
 			}
 			failed=true;
@@ -90,7 +78,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 					output.add("12");
 					output.add("7");
 					output.add(status);
-					System.out.println("Message: " + output.toString());
 					return output;
 				}
 			}
@@ -103,7 +90,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 					output.add("12");
 					output.add("8");
 					output.add(status);
-					System.out.println("Message: " + output.toString());
 					return output;
 				}
 			}
@@ -115,7 +101,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 				output.add("12");
 				output.add("9");
 				output.add(status);
-				System.out.println("Message: " + output.toString());
 				return output;		
 			}
 			failed=true;
@@ -125,8 +110,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 				if(((Student)loggedUser).unregister(Integer.parseInt(msg.get(1)))) {
 					output.add("12");
 					output.add("10");
-					System.out.println(database.courseStatus(Integer.parseInt(msg.get(1))));
-					System.out.println("Message: " + output.toString());
 					return output;
 				}
 			}
@@ -139,7 +122,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 				output.add("12");
 				output.add("11");
 				output.add(status);
-				System.out.println("Message: " + output.toString());
 				return output;		
 			}
 			failed=true;	
@@ -148,7 +130,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 		if(failed) {//return Error
 			output.add("13");
 			output.add(opCode.toString());
-			System.out.println("ERROR Message: " + output.toString());
 		}
 			
 		

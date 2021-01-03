@@ -14,7 +14,8 @@ void readFromConsoleTask::run(ConnectionHandler &connectionHandler) {
         getline(cin, consoleInput);
         string output = encDec.encode(consoleInput);
         if(output!="INPUT ERROR") {//check if the input from the keyboard is valid
-            connectionHandler.sendBytes(output.c_str(), output.length());
+            if(!connectionHandler.sendBytes(output.c_str(), output.length()))
+                break;
         }
     }
     std::this_thread::yield();
@@ -29,7 +30,8 @@ void readFromSocketTask::run(ConnectionHandler &connectionHandler) {
         char byte;
         string result = "not-finished";
         while (result == "not-finished") {
-            connectionHandler.getBytes(&byte, 1);
+            if(!connectionHandler.getBytes(&byte, 1))
+                break;
             result = encDec.decode(byte);
         }
         terminated = protocol.process(result);

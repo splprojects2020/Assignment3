@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Database {
 
-	public ConcurrentHashMap<Integer,Course> coursesList; //CHANGED FROM PRIVATE
-	public ConcurrentHashMap<String,User> usersList;//CHANGED FROM PRIVATE
+	private ConcurrentHashMap<Integer,Course> coursesList; 
+	private ConcurrentHashMap<String,User> usersList;
 	private Vector<Integer> coursesPosition;
 	//to prevent user from creating new Database
 	private Database() {
@@ -84,11 +84,16 @@ public class Database {
 		if(usersList.containsKey(userName))
 			return false;
 		if(admin) {
-			usersList.put(userName, new Admin(userName,password));
+			Admin newAdmin = new Admin(userName,password);
+			if(usersList.putIfAbsent(userName, newAdmin)!=null) { //handling a situation when 2 clients register with the same username concurrently
+				return false;
+			}
 		}
 		else {
-			usersList.put(userName, new Student(userName,password));
-		}
+			Student newStudent = new Student(userName,password); //handling a situation when 2 clients register with the same username concurrently
+			if(usersList.putIfAbsent(userName, newStudent)!=null)
+				return false;
+			}
 		return true;
 	}
 	public boolean login(String userName,String password) {
@@ -100,7 +105,7 @@ public class Database {
 		currentUser.login();
 		return true;
 	}
-	public boolean logout(User currentUser) {//TODO
+	public boolean logout(User currentUser) {
 		if(currentUser==null)
 			return false;
 		currentUser.logout();
@@ -110,13 +115,15 @@ public class Database {
 	public boolean registerCourse(int courseName,Student currentUser) {
 
 		Course desiredCourse = coursesList.get(courseName);
-		if(desiredCourse==null || desiredCourse.getNumOfSeatsAvailable()<=0 |
-				!currentUser.getRegisterdCourses().containsAll(desiredCourse.getKdamCoursesList()) |
-				currentUser.getRegisterdCourses().contains(desiredCourse.getCourseNum())) 
-			return false;
-		desiredCourse.takeSeat();
-		desiredCourse.setRoot(desiredCourse.getListOfStudents().insert(desiredCourse.getRoot(), currentUser.getUsername()));	
-		return true;
+		synchronized(desiredCourse) { //not allowing 2+ users to register to the same course concurrently
+			if(desiredCourse==null || desiredCourse.getNumOfSeatsAvailable()<=0 |
+					!currentUser.getRegisterdCourses().containsAll(desiredCourse.getKdamCoursesList()) |
+					currentUser.getRegisterdCourses().contains(desiredCourse.getCourseNum())) 
+				return false;
+			desiredCourse.takeSeat();
+			desiredCourse.setRoot(desiredCourse.getListOfStudents().insert(desiredCourse.getRoot(), currentUser.getUsername()));	
+			return true;
+		}
 	}
 	public String courseStatus(int courseNum) {	
 		Course desiredCourse = coursesList.get(courseNum);
@@ -131,8 +138,10 @@ public class Database {
 	}
 	public void unregisterStudentFromCourse(String studentName,int courseNum) {
 		Course desiredCourse = coursesList.get(courseNum);
-		desiredCourse.setRoot(desiredCourse.getListOfStudents().deleteNode(desiredCourse.getRoot(), studentName));
-		desiredCourse.releaseSeat();
+		synchronized(desiredCourse) {
+			desiredCourse.setRoot(desiredCourse.getListOfStudents().deleteNode(desiredCourse.getRoot(), studentName));
+			desiredCourse.releaseSeat();
+		}
 	}
 	public String kdamCheck(int courseNumber) {
 		Course desiredCourse=coursesList.get(courseNumber);
