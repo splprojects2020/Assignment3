@@ -3,17 +3,18 @@ import java.util.Vector;
 
 public class Student extends User{
 	
-	private Vector<Course> registerdCourses;
+	private Vector<Integer> registerdCourses;
 	
 	public Student(String userName,String password) {
 		super(userName,password);
-		registerdCourses=new Vector<Course>();
+		registerdCourses=new Vector<Integer>();
 	}
-	public Vector<Course> getRegisterdCourses(){
+	public Vector<Integer> getRegisterdCourses(){
 		return registerdCourses;
 	}
 	public boolean registerCourse(int courseNum) {
 		if(database.registerCourse(courseNum,this)) {
+			registerdCourses.sort((a,b)->{return database.getCoursePosition(a)-database.getCoursePosition(b);});
 			registerdCourses.add(courseNum);
 			return true;
 		}

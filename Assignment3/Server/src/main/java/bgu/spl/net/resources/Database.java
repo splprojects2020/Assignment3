@@ -17,10 +17,12 @@ public class Database {
 
 	public ConcurrentHashMap<Integer,Course> coursesList; //CHANGED FROM PRIVATE
 	public ConcurrentHashMap<String,User> usersList;//CHANGED FROM PRIVATE
+	private Vector<Integer> coursesPosition;
 	//to prevent user from creating new Database
 	private Database() {
 		coursesList = new ConcurrentHashMap<Integer,Course>();
 		usersList = new ConcurrentHashMap<String,User>();
+		coursesPosition = new Vector<Integer>();
 	}
 
 	/**
@@ -41,11 +43,11 @@ public class Database {
 	public boolean initialize(String coursesFilePath) {
 		try {
 			Scanner scanner = new Scanner(new File(coursesFilePath));
-			int position=0;
 			while (scanner.hasNextLine()) {
 				
 				String line=(scanner.nextLine());
 				int courseNumber=Integer.parseInt(line.substring(0, line.indexOf('|')));
+				coursesPosition.add(courseNumber);
 				line=line.substring(line.indexOf('|')+1,line.length());;
 				String courseName=line.substring(0, line.indexOf('|'));
 				line=line.substring(line.indexOf('|')+1,line.length());
@@ -62,9 +64,8 @@ public class Database {
 				}	
 				
 				int maxPlace=Integer.parseInt(line.substring(line.indexOf('|')+1,line.length()));	
-				Course newCourse = new Course(courseNumber,courseName,kdamCourse,maxPlace,position);
+				Course newCourse = new Course(courseNumber,courseName,kdamCourse,maxPlace);
 				coursesList.putIfAbsent(courseNumber, newCourse);
-				position++;
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
@@ -76,7 +77,9 @@ public class Database {
 	public User getUser(String userName) {
 		return usersList.get(userName);		
 	}
-	
+	public int getCoursePosition(Integer courseNum){
+		return coursesPosition.indexOf((Integer)courseNum);
+	}
 	public boolean register(String userName,String password,boolean admin) {
 		if(usersList.containsKey(userName))
 			return false;
