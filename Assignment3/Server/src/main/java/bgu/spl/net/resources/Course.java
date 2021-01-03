@@ -11,8 +11,9 @@ public class Course {
 	private int numOfSeatsAvailable;
 	private AVLTree listOfStudents;
 	private Node root;
+	private final int position;
 
-	public Course(int courseNum,String courseName,Vector<Integer> kdamCoursesList,int numOfMaxStudents) {
+	public Course(int courseNum,String courseName,Vector<Integer> kdamCoursesList,int numOfMaxStudents,int position) {
 		this.courseNum=courseNum;
 		this.courseName=courseName;
 		this.kdamCoursesList=kdamCoursesList;
@@ -20,6 +21,10 @@ public class Course {
 		this.numOfSeatsAvailable=numOfMaxStudents;
 		this.root=null;
 		this.listOfStudents=new AVLTree();
+		this.position=position;
+	}
+	public int getPosition() {
+		return position;
 	}
 	public int getCourseNum() { 
 		return courseNum;

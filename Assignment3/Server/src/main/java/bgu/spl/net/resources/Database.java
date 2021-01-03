@@ -41,6 +41,7 @@ public class Database {
 	public boolean initialize(String coursesFilePath) {
 		try {
 			Scanner scanner = new Scanner(new File(coursesFilePath));
+			int position=0;
 			while (scanner.hasNextLine()) {
 				
 				String line=(scanner.nextLine());
@@ -57,12 +58,13 @@ public class Database {
 					else if(kdamCourseString.charAt(i)==',') {
 						kdamCourse.add((Integer.parseInt(temp)));
 						temp="";
-	        	}  		
-	        } 
-	       
-			int maxPlace=Integer.parseInt(line.substring(line.indexOf('|')+1,line.length()));	
-			Course newCourse = new Course(courseNumber,courseName,kdamCourse,maxPlace);
-			coursesList.putIfAbsent(courseNumber, newCourse);
+					}  		
+				}	
+				
+				int maxPlace=Integer.parseInt(line.substring(line.indexOf('|')+1,line.length()));	
+				Course newCourse = new Course(courseNumber,courseName,kdamCourse,maxPlace,position);
+				coursesList.putIfAbsent(courseNumber, newCourse);
+				position++;
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {

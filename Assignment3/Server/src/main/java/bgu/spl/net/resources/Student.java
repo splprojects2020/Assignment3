@@ -3,13 +3,13 @@ import java.util.Vector;
 
 public class Student extends User{
 	
-	private Vector<Integer> registerdCourses;
+	private Vector<Course> registerdCourses;
 	
 	public Student(String userName,String password) {
 		super(userName,password);
-		registerdCourses=new Vector<Integer>();
+		registerdCourses=new Vector<Course>();
 	}
-	public Vector<Integer> getRegisterdCourses(){
+	public Vector<Course> getRegisterdCourses(){
 		return registerdCourses;
 	}
 	public boolean registerCourse(int courseNum) {
