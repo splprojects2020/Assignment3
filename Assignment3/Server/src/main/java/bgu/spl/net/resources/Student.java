@@ -14,15 +14,15 @@ public class Student extends User{
 	}
 	public boolean registerCourse(int courseNum) {
 		if(database.registerCourse(courseNum,this)) {
-			registerdCourses.sort((a,b)->{return database.getCoursePosition(a)-database.getCoursePosition(b);});
 			registerdCourses.add(courseNum);
+			registerdCourses.sort((a,b)->{return database.getCoursePosition(a)-database.getCoursePosition(b);});
 			return true;
 		}
 		return false;
 	}
 	public String studentStatus() {
 		return "Student: "+userName+ " \n"+
-				"Courses: "+registerdCourses.toString() + " **NEED TO ORDED**";
+				"Courses: "+registerdCourses.toString();
 	}
 	public String isRegisterdToCourse(int courseNum) {
 		if(registerdCourses.contains(courseNum))
