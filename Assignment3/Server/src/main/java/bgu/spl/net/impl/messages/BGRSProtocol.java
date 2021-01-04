@@ -24,7 +24,6 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 				return output;
 			}
 			failed=true;
-			System.out.println(failed);
 			break;
 		case 2://Student register
 			if(loggedUser==null && database.register(msg.get(1), msg.get(2),false)) {//return ACK
@@ -126,7 +125,7 @@ public class BGRSProtocol implements MessagingProtocol<Vector<String>>{
 			}
 			failed=true;	
 			break;
-		}System.out.println(failed);
+		}
 		if(failed) {//return Error
 			output.add("13");
 			output.add(opCode.toString());
