@@ -13,7 +13,7 @@ public class ReactorMain {
 		if(!database.initialize("./Courses.txt"))
 			return;
 	
-		Server<Vector<String>> reactorServer=Server.reactor(4, 7777, ()->new BGRSProtocol(), ()->new BGRSEncoderDecoder());
+		Server<Vector<String>> reactorServer=Server.reactor(Integer.parseInt(args[1]), Integer.parseInt(args[0]), ()->new BGRSProtocol(), ()->new BGRSEncoderDecoder());
 		reactorServer.serve();
 		
 		

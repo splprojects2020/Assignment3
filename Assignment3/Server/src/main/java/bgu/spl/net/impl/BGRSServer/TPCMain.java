@@ -14,7 +14,7 @@ public class TPCMain {
 		Database database = Database.getInstance();
 		if(!database.initialize("./Courses.txt"))
 			return;
-		Server<Vector<String>> tpcServer=Server.threadPerClient(7777, ()->new BGRSProtocol(), ()->new BGRSEncoderDecoder());
+		Server<Vector<String>> tpcServer=Server.threadPerClient(Integer.parseInt(args[0]), ()->new BGRSProtocol(), ()->new BGRSEncoderDecoder());
 		tpcServer.serve();
 
 	}
