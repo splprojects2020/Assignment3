@@ -35,9 +35,6 @@ void readFromSocketTask::run(ConnectionHandler &connectionHandler) {
             result = encDec.decode(byte);
         }
         terminated = protocol.process(result);
-        if(terminated){
-            connectionHandler.close();
-        }
     }
     std::this_thread::yield();
 
