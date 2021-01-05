@@ -9,7 +9,7 @@ all: bin/BGRSClient
 bin/BGRSClient: bin/connectionHandler.o bin/Main.o bin/MessageEncoderDecoder.o bin/MessageProtocol.o bin/Task.o
 	@echo 'Building target: BGRSClient'
 	@echo 'Invoking: C++ Linker'
-	g++ -o bin/BGRSClient bin/connectionHandler.o bin/Main.o bin/MessageEncoderDecoder.o bin/MessageProtocol.o bin/Task.o -lboost_system -lpthread
+	g++ -o bin/BGRSClient bin/connectionHandler.o bin/Main.o bin/MessageEncoderDecoder.o bin/MessageProtocol.o bin/Task.o -lboost_system -lpthread -lboost_thread
 	@echo 'Finished building target: BGRSClient'
 	@echo ' '
 

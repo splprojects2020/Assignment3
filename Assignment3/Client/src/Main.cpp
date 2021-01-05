@@ -25,7 +25,7 @@ int main (int argc, char *argv[]) {
     std::thread th2(&readFromSocketTask::run,readFromSocketTask1,std::ref(connectionHandler));
 
     th2.join();
-    th1.detach();
+    th1.join();
 
     delete readFromConsoleTask1;
     delete readFromSocketTask1;

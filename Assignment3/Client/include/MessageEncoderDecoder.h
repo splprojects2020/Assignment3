@@ -22,11 +22,12 @@ public:
     short bytesToShort(char *bytesArr);
     void Reset();
     short getShortOpCode(string & opCodeString);
+
+
     int opCounter;
     short opCodeShort;
     string result;
     string opCodeByte;
-
 
 };
 

@@ -1,12 +1,12 @@
 #include <MessageEncoderDecoder.h>
 #include <stdio.h>
-MessageEncoderDecoder::MessageEncoderDecoder():opCounter(0),opCodeShort(0) {
+MessageEncoderDecoder::MessageEncoderDecoder():opCounter(0),opCodeShort(0),result(""),opCodeByte("") {
 }
 string MessageEncoderDecoder::encode(string &consoleInput) {
     string result;
     string opCodeString="";
 
-    for(int i=0;i<consoleInput.length() && consoleInput[i]!=' ';i++) { //return the command
+    for(unsigned int i=0;i<consoleInput.length() && consoleInput[i]!=' ';i++) { //return the command
         opCodeString += consoleInput[i];
     }
     short opCodeAsShort = getShortOpCode(opCodeString);
@@ -23,13 +23,13 @@ string MessageEncoderDecoder::encode(string &consoleInput) {
 
     string subInput = consoleInput.substr(consoleInput.find(' ')+1);
 
-    if(opCodeAsShort>=1 && opCodeAsShort<=3 | opCodeAsShort==8){ //ADMINREG, STUDENTREG, LOGIN, STUDENTSTAT
+    if((opCodeAsShort>=1 && opCodeAsShort<=3) | (opCodeAsShort==8)){ //ADMINREG, STUDENTREG, LOGIN, STUDENTSTAT
         if(opCodeAsShort!=8)
             std::replace(subInput.begin(),subInput.end(),' ','\0');
         subInput+='\0';
         result.append(subInput); //appends subInput to result
     }
-    if(opCodeAsShort>=5 && opCodeAsShort<=7 | opCodeAsShort==9 | opCodeAsShort==10){ //COURSEREG or KDAMCHECK or COURSESTAT or ISREGISTERED or UNREGISTER
+    if((opCodeAsShort>=5 && opCodeAsShort<=7) | (opCodeAsShort==9) | (opCodeAsShort==10)){ //COURSEREG or KDAMCHECK or COURSESTAT or ISREGISTERED or UNREGISTER
         short courseNumToShort = stoi(subInput);
         char  courseNumAsBytes[2];
         shortToBytes(courseNumToShort,courseNumAsBytes);
@@ -67,7 +67,7 @@ string MessageEncoderDecoder::decode(char nextByte) {
 
     if(opCounter==4){
         opCounter++;
-        if(result.substr(0,2)=="13"|| (opCodeShort>=1 && opCodeShort<=5 || opCodeShort==10)) {//Error or ACK without optional
+        if(result.substr(0,2)=="13"|| ((opCodeShort>=1 && opCodeShort<=5 )|| opCodeShort==10)) {//Error or ACK without optional
             string tmp=result;
             Reset();
             return tmp;

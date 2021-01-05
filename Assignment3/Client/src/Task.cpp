@@ -1,11 +1,13 @@
 
 #include "Task.h"
 
-Task::Task(bool &shutdown): terminated(shutdown){}
+Task::Task(bool &shutdown): encDec(),protocol(),terminated(shutdown){}
 void Task::run(ConnectionHandler &connectionHandler) {}
+Task::~Task()=default;
 
 //readFromConsoleTask
 readFromConsoleTask::readFromConsoleTask(bool &shutdown):Task(shutdown){}
+readFromConsoleTask::~readFromConsoleTask()=default;
 void readFromConsoleTask::run(ConnectionHandler &connectionHandler) {
     using namespace std;
     while(!terminated) {
@@ -17,14 +19,16 @@ void readFromConsoleTask::run(ConnectionHandler &connectionHandler) {
             if(!connectionHandler.sendBytes(output.c_str(), output.length()))
                 break;
         }
+        boost::this_thread::sleep( boost::posix_time::milliseconds(1000) );
     }
     std::this_thread::yield();
 
 }
 
+
 //readFromSocketTask
 readFromSocketTask::readFromSocketTask(bool &shutdown):Task(shutdown){}
-
+readFromSocketTask::~readFromSocketTask()=default;
 void readFromSocketTask::run(ConnectionHandler &connectionHandler) {
     while(!terminated) {
         char byte;
