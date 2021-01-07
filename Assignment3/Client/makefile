@@ -2,15 +2,15 @@ CFLAGS:=-c -Wall -Weffc++ -g -std=c++11 -Iinclude
 LDFLAGS:=-lboost_system
 
 # All Targets
-all: bin/BGRSClient
+all: bin/BGRSclient
 
 # Tool invocations
-# Executable "BGRSClient" depends on the files connectionHandler.o Main.o MessageEncoderDecoder.o MessageProtocol.o Task.o
-bin/BGRSClient: bin/connectionHandler.o bin/Main.o bin/MessageEncoderDecoder.o bin/MessageProtocol.o bin/Task.o
-	@echo 'Building target: BGRSClient'
+# Executable "BGRSclient" depends on the files connectionHandler.o Main.o MessageEncoderDecoder.o MessageProtocol.o Task.o
+bin/BGRSclient: bin/connectionHandler.o bin/Main.o bin/MessageEncoderDecoder.o bin/MessageProtocol.o bin/Task.o
+	@echo 'Building target: BGRSclient'
 	@echo 'Invoking: C++ Linker'
-	g++ -o bin/BGRSClient bin/connectionHandler.o bin/Main.o bin/MessageEncoderDecoder.o bin/MessageProtocol.o bin/Task.o -lboost_system -lpthread -lboost_thread
-	@echo 'Finished building target: BGRSClient'
+	g++ -o bin/BGRSclient bin/connectionHandler.o bin/Main.o bin/MessageEncoderDecoder.o bin/MessageProtocol.o bin/Task.o -lboost_system -lpthread -lboost_thread
+	@echo 'Finished building target: BGRSclient'
 	@echo ' '
 
 #connectionHandler.o Depends on the source and header files src/connectionHandler.cpp include/connectionHandler.h
